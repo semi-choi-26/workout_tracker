@@ -1,0 +1,51 @@
+name: Build Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Android APK
+        run: eas build --platform android --profile preview --non-interactive --no-wait
+
+      # 선택사항: 빌드 완료 후 APK 다운로드
+      # - name: Download APK
+      #   run: |
+      #     # EAS CLI를 사용하여 빌드 상태 확인 및 다운로드
+      #     # 빌드 ID는 이전 단계의 출력에서 가져올 수 있습니다
+      #     echo "빌드가 완료되면 Expo 대시보드에서 APK를 다운로드할 수 있습니다"
+
+      - name: Build summary
+        run: |
+          echo "✅ Android APK 빌드가 시작되었습니다!"
+          echo "📱 Expo 대시보드(https://expo.dev)에서 빌드 진행 상황을 확인하세요."
