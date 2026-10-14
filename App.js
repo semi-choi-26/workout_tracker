@@ -15,6 +15,11 @@ import { StatusBar } from 'expo-status-bar';
 
 const STORAGE_KEY = '@workout_data';
 
+// 운동 이름 정규화 함수 (대소문자, 공백 처리)
+const normalizeExerciseName = (name) => {
+  return name.trim().toLowerCase();
+};
+
 export default function App() {
   const [workouts, setWorkouts] = useState({});
   const [exerciseName, setExerciseName] = useState('');
@@ -65,13 +70,16 @@ export default function App() {
     };
 
     const updatedWorkouts = { ...workouts };
+    const normalizedName = normalizeExerciseName(exerciseName);
 
     // 같은 운동 이름이 있으면 세트 추가, 없으면 새로 생성
-    if (updatedWorkouts[exerciseName]) {
-      updatedWorkouts[exerciseName].sets.push(newSet);
+    if (updatedWorkouts[normalizedName]) {
+      updatedWorkouts[normalizedName].sets.push(newSet);
+      // 기존 운동에 세트를 추가할 때도 가장 최근 입력한 이름으로 업데이트
+      updatedWorkouts[normalizedName].name = exerciseName.trim();
     } else {
-      updatedWorkouts[exerciseName] = {
-        name: exerciseName,
+      updatedWorkouts[normalizedName] = {
+        name: exerciseName.trim(), // 원본 이름 저장 (화면 표시용)
         sets: [newSet],
       };
     }
@@ -87,6 +95,7 @@ export default function App() {
 
   // 운동 삭제
   const deleteWorkout = (name) => {
+    const normalizedName = normalizeExerciseName(name);
     Alert.alert(
       '삭제 확인',
       `"${name}" 운동의 모든 기록을 삭제하시겠습니까?`,
@@ -97,7 +106,7 @@ export default function App() {
           style: 'destructive',
           onPress: () => {
             const updatedWorkouts = { ...workouts };
-            delete updatedWorkouts[name];
+            delete updatedWorkouts[normalizedName];
             setWorkouts(updatedWorkouts);
             saveWorkouts(updatedWorkouts);
           },
@@ -108,12 +117,13 @@ export default function App() {
 
   // 세트 삭제
   const deleteSet = (exerciseName, setIndex) => {
+    const normalizedName = normalizeExerciseName(exerciseName);
     const updatedWorkouts = { ...workouts };
-    updatedWorkouts[exerciseName].sets.splice(setIndex, 1);
+    updatedWorkouts[normalizedName].sets.splice(setIndex, 1);
 
     // 세트가 모두 삭제되면 운동 자체를 삭제
-    if (updatedWorkouts[exerciseName].sets.length === 0) {
-      delete updatedWorkouts[exerciseName];
+    if (updatedWorkouts[normalizedName].sets.length === 0) {
+      delete updatedWorkouts[normalizedName];
     }
 
     setWorkouts(updatedWorkouts);
