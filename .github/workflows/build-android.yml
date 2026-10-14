@@ -1,4 +1,4 @@
-name: Build Android APK
+name: "🤖 Android APK Build (Local)"
 
 on:
   push:
@@ -11,42 +11,69 @@ on:
       - master
   workflow_dispatch:
 
+env:
+  EXPO_NAME: workout-tracker
+
 jobs:
   build:
     name: Build Android APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 📦 Install dependencies
         run: npm ci
 
-      - name: Setup Expo and EAS
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-          packager: npm
+      - name: 🔨 Setup Expo
+        run: npm install -g expo-cli
 
-      - name: Build Android APK
-        run: eas build --platform android --profile preview --non-interactive --no-wait
+      - name: 🏗️ Generate Android project
+        run: npx expo prebuild --platform android --clean
 
-      # 선택사항: 빌드 완료 후 APK 다운로드
-      # - name: Download APK
-      #   run: |
-      #     # EAS CLI를 사용하여 빌드 상태 확인 및 다운로드
-      #     # 빌드 ID는 이전 단계의 출력에서 가져올 수 있습니다
-      #     echo "빌드가 완료되면 Expo 대시보드에서 APK를 다운로드할 수 있습니다"
+      - name: 📁 Setup build directory
+        run: mkdir -p builds/android
 
-      - name: Build summary
+      - name: 🔨 Build APK
+        working-directory: android
+        run: ./gradlew assembleRelease --no-daemon
+
+      - name: 📋 Copy APK to builds folder
         run: |
-          echo "✅ Android APK 빌드가 시작되었습니다!"
-          echo "📱 Expo 대시보드(https://expo.dev)에서 빌드 진행 상황을 확인하세요."
+          cp android/app/build/outputs/apk/release/app-release.apk builds/android/${EXPO_NAME}.apk
+          echo "APK built successfully"
+          ls -lh builds/android/
+
+      - name: 📤 Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: builds/android/${{ env.EXPO_NAME }}.apk
+          retention-days: 14
+
+      - name: 📊 Build summary
+        run: |
+          echo "### 📱 Android APK Build Success!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f "builds/android/${EXPO_NAME}.apk" ]; then
+            echo "**File:** ${EXPO_NAME}.apk" >> $GITHUB_STEP_SUMMARY
+            echo "**Size:** $(du -h builds/android/${EXPO_NAME}.apk | cut -f1)" >> $GITHUB_STEP_SUMMARY
+            echo "**Status:** ✅ Ready to install!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Download:** Actions 탭 > Artifacts에서 다운로드" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Status:** ❌ Build failed" >> $GITHUB_STEP_SUMMARY
+          fi
