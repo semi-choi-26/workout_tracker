@@ -8,6 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useWorkouts } from '../../hooks/useWorkouts';
 import { usePersonalRecords } from '../../hooks/usePersonalRecords';
 import { WorkoutInput } from '../../components/WorkoutInput';
@@ -40,13 +41,14 @@ export default function HomeScreen() {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <StatusBar style="auto" />
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <StatusBar style="auto" />
 
-      <View style={styles.header}>
+        <View style={styles.header}>
         <Text style={styles.headerTitle}>💪 운동 기록</Text>
         {Object.keys(workouts).length > 0 && (
           <Text style={styles.headerSubtitle}>
@@ -93,12 +95,17 @@ export default function HomeScreen() {
           })
         )}
       </ScrollView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: '#4A90E2',
+  },
+  flex: {
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
@@ -110,7 +117,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#4A90E2',
-    paddingTop: 50,
+    paddingTop: 20,
     paddingBottom: 20,
     paddingHorizontal: 20,
   },
@@ -127,6 +134,7 @@ const styles = StyleSheet.create({
   workoutList: {
     flex: 1,
     padding: 15,
+    paddingBottom: 80,
   },
   emptyState: {
     alignItems: 'center',

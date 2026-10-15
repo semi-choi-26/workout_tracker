@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useWorkouts } from '../../hooks/useWorkouts';
 import { usePersonalRecords } from '../../hooks/usePersonalRecords';
 import { PersonalRecordCard } from '../../components/PersonalRecordCard';
@@ -22,7 +23,7 @@ export default function RecordsScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <StatusBar style="auto" />
 
       <View style={styles.header}>
@@ -49,14 +50,14 @@ export default function RecordsScreen() {
           ))
         )}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#4A90E2',
   },
   loadingContainer: {
     flex: 1,
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#4A90E2',
-    paddingTop: 50,
+    paddingTop: 20,
     paddingBottom: 20,
     paddingHorizontal: 20,
   },
@@ -83,6 +84,8 @@ const styles = StyleSheet.create({
   recordsList: {
     flex: 1,
     padding: 15,
+    paddingBottom: 80,
+    backgroundColor: '#f5f5f5',
   },
   emptyState: {
     alignItems: 'center',
