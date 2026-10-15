@@ -44,12 +44,25 @@ jobs:
       - name: 🏗️ Generate Android project
         run: npx expo prebuild --platform android --clean
 
+      - name: 💾 Show available memory
+        run: free -h
+
+      - name: ⚙️ Configure Gradle memory settings
+        run: |
+          echo "org.gradle.jvmargs=-Xmx3072m -XX:MaxMetaspaceSize=768m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" >> android/gradle.properties
+          echo "org.gradle.daemon=false" >> android/gradle.properties
+          echo "org.gradle.parallel=false" >> android/gradle.properties
+          echo "org.gradle.configureondemand=false" >> android/gradle.properties
+          echo "android.enableR8.fullMode=false" >> android/gradle.properties
+          echo "android.enableDexingArtifactTransform=false" >> android/gradle.properties
+          cat android/gradle.properties
+
       - name: 📁 Setup build directory
         run: mkdir -p builds/android
 
       - name: 🔨 Build APK
         working-directory: android
-        run: ./gradlew assembleRelease --no-daemon
+        run: ./gradlew assembleRelease --no-daemon --max-workers=2
 
       - name: 📋 Copy APK to builds folder
         run: |
