@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,15 +7,31 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { ExerciseCategory, detectCategory, getAllCategories } from '../utils/exerciseCategories';
 
 interface WorkoutInputProps {
-  onAddWorkout: (exerciseName: string, weight: number, reps: number) => Promise<boolean>;
+  onAddWorkout: (
+    exerciseName: string,
+    weight: number,
+    reps: number,
+    category: ExerciseCategory
+  ) => Promise<boolean>;
 }
 
 export const WorkoutInput: React.FC<WorkoutInputProps> = ({ onAddWorkout }) => {
   const [exerciseName, setExerciseName] = useState('');
   const [weight, setWeight] = useState('');
   const [reps, setReps] = useState('');
+  const [category, setCategory] = useState<ExerciseCategory>(ExerciseCategory.FULL_BODY);
+
+  // 운동 이름이 변경될 때마다 자동으로 카테고리 감지
+  useEffect(() => {
+    if (exerciseName.trim()) {
+      const detected = detectCategory(exerciseName);
+      setCategory(detected);
+    }
+  }, [exerciseName]);
 
   const handleAddWorkout = async () => {
     if (!exerciseName.trim()) {
@@ -31,7 +47,8 @@ export const WorkoutInput: React.FC<WorkoutInputProps> = ({ onAddWorkout }) => {
       const success = await onAddWorkout(
         exerciseName,
         parseFloat(weight),
-        parseInt(reps, 10)
+        parseInt(reps, 10),
+        category
       );
 
       if (success) {
@@ -45,6 +62,8 @@ export const WorkoutInput: React.FC<WorkoutInputProps> = ({ onAddWorkout }) => {
     }
   };
 
+  const categories = getAllCategories();
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>운동 이름</Text>
@@ -54,6 +73,25 @@ export const WorkoutInput: React.FC<WorkoutInputProps> = ({ onAddWorkout }) => {
         value={exerciseName}
         onChangeText={setExerciseName}
       />
+
+      <Text style={styles.label}>
+        카테고리 {exerciseName && <Text style={styles.autoDetected}>(자동 감지됨)</Text>}
+      </Text>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={category}
+          onValueChange={(value) => setCategory(value)}
+          style={styles.picker}
+        >
+          {categories.map((cat) => (
+            <Picker.Item
+              key={cat.key}
+              label={`${cat.emoji} ${cat.label}`}
+              value={cat.key}
+            />
+          ))}
+        </Picker>
+      </View>
 
       <View style={styles.row}>
         <View style={styles.halfInput}>
@@ -126,5 +164,21 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    marginBottom: 15,
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+  },
+  picker: {
+    height: 50,
+  },
+  autoDetected: {
+    fontSize: 12,
+    color: '#4A90E2',
+    fontWeight: 'normal',
   },
 });

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { WorkoutData, WorkoutSet } from '../types/workout';
 import { normalizeExerciseName } from '../utils/workoutUtils';
+import { ExerciseCategory } from '../utils/exerciseCategories';
 
 const STORAGE_KEY = '@workout_data';
 
@@ -43,7 +44,8 @@ export const useWorkouts = () => {
   const addWorkout = async (
     exerciseName: string,
     weight: number,
-    reps: number
+    reps: number,
+    category: ExerciseCategory
   ): Promise<boolean> => {
     const newSet: WorkoutSet = {
       weight,
@@ -57,11 +59,13 @@ export const useWorkouts = () => {
     // 같은 운동 이름이 있으면 세트 추가, 없으면 새로 생성
     if (updatedWorkouts[normalizedName]) {
       updatedWorkouts[normalizedName].sets.push(newSet);
-      // 기존 운동에 세트를 추가할 때도 가장 최근 입력한 이름으로 업데이트
+      // 기존 운동에 세트를 추가할 때도 가장 최근 입력한 이름과 카테고리로 업데이트
       updatedWorkouts[normalizedName].name = exerciseName.trim();
+      updatedWorkouts[normalizedName].category = category;
     } else {
       updatedWorkouts[normalizedName] = {
         name: exerciseName.trim(),
+        category,
         sets: [newSet],
       };
     }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,11 +12,24 @@ import { useWorkouts } from '../../hooks/useWorkouts';
 import { usePersonalRecords } from '../../hooks/usePersonalRecords';
 import { WorkoutInput } from '../../components/WorkoutInput';
 import { WorkoutCard } from '../../components/WorkoutCard';
+import { CategoryFilter } from '../../components/CategoryFilter';
 import { normalizeExerciseName } from '../../utils/workoutUtils';
+import { ExerciseCategory } from '../../utils/exerciseCategories';
 
 export default function HomeScreen() {
   const { workouts, isLoading, addWorkout, deleteWorkout, deleteSet } = useWorkouts();
   const personalRecords = usePersonalRecords(workouts);
+  const [selectedCategory, setSelectedCategory] = useState<ExerciseCategory | 'ALL'>('ALL');
+
+  // 카테고리별 필터링
+  const filteredWorkouts = useMemo(() => {
+    if (selectedCategory === 'ALL') {
+      return Object.values(workouts);
+    }
+    return Object.values(workouts).filter(
+      (workout) => workout.category === selectedCategory
+    );
+  }, [workouts, selectedCategory]);
 
   if (isLoading) {
     return (
@@ -35,7 +48,20 @@ export default function HomeScreen() {
 
       <View style={styles.header}>
         <Text style={styles.headerTitle}>💪 운동 기록</Text>
+        {Object.keys(workouts).length > 0 && (
+          <Text style={styles.headerSubtitle}>
+            {selectedCategory === 'ALL'
+              ? `총 ${Object.keys(workouts).length}개 운동`
+              : `${filteredWorkouts.length}개 운동`
+            }
+          </Text>
+        )}
       </View>
+
+      <CategoryFilter
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+      />
 
       <WorkoutInput onAddWorkout={addWorkout} />
 
@@ -45,8 +71,13 @@ export default function HomeScreen() {
             <Text style={styles.emptyText}>아직 기록된 운동이 없습니다.</Text>
             <Text style={styles.emptySubText}>위에서 운동을 추가해보세요!</Text>
           </View>
+        ) : filteredWorkouts.length === 0 ? (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyText}>이 카테고리에 운동이 없습니다.</Text>
+            <Text style={styles.emptySubText}>다른 카테고리를 선택해보세요!</Text>
+          </View>
         ) : (
-          Object.values(workouts).map((workout) => {
+          filteredWorkouts.map((workout) => {
             const normalizedName = normalizeExerciseName(workout.name);
             const record = personalRecords[normalizedName];
 
@@ -87,6 +118,11 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: '#fff',
+    marginBottom: 4,
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    color: '#E6F4FE',
   },
   workoutList: {
     flex: 1,
