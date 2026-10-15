@@ -52,12 +52,17 @@ jobs:
 
       - name: ⚙️ Configure Gradle memory settings
         run: |
+          echo "" >> android/gradle.properties
+          echo "# Custom build settings" >> android/gradle.properties
           echo "org.gradle.jvmargs=-Xmx3072m -XX:MaxMetaspaceSize=768m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" >> android/gradle.properties
           echo "org.gradle.daemon=false" >> android/gradle.properties
           echo "org.gradle.parallel=false" >> android/gradle.properties
           echo "org.gradle.configureondemand=false" >> android/gradle.properties
           echo "android.enableR8.fullMode=false" >> android/gradle.properties
+          echo "" >> android/gradle.properties
+          echo "=== gradle.properties ==="
           cat android/gradle.properties
+          echo "========================"
 
       - name: 📁 Setup build directory
         run: mkdir -p builds/android
