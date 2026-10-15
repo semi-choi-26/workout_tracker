@@ -1,15 +1,33 @@
-# 💪 운동 기록 앱
+# 💪 운동 기록 앱 v2.0
 
-React Native + Expo로 만든 간단한 운동 기록 애플리케이션입니다.
+TypeScript + Expo Router로 재구성된 프로페셔널 운동 기록 애플리케이션입니다.
 
-## 주요 기능
+## ✨ 주요 기능
 
+### 기본 기능
 - ✅ 운동 이름, 무게, 개수 기록
 - ✅ 같은 운동 이름이면 세트를 추가
 - ✅ 새로운 운동이면 새로 생성
 - ✅ 로컬 저장소(AsyncStorage) 사용으로 오프라인 동작
 - ✅ 운동별 세트 관리 및 삭제
 - ✅ 깔끔한 UI/UX
+
+### 🆕 v2.0 신규 기능
+- 🏆 **개인 기록(PR) 추적**
+  - 운동별 최고 중량 자동 기록
+  - 최고 볼륨(무게 × 횟수) 추적
+  - 신기록 달성 시 🏆 배지 표시
+  - 총 볼륨 및 세트 통계
+- 📱 **탭 네비게이션**
+  - 운동 기록 탭
+  - 개인 기록 탭
+- 💻 **TypeScript 지원**
+  - 완전한 타입 안정성
+  - 더 나은 개발자 경험
+- 🏗️ **모듈화된 구조**
+  - 컴포넌트 분리
+  - 커스텀 훅
+  - 유틸리티 함수
 
 ## 시작하기
 
@@ -82,13 +100,30 @@ npm start
 
 ```
 workout-tracker/
-├── App.js              # 메인 애플리케이션 코드
-├── app.json            # Expo 설정
-├── eas.json            # EAS Build 설정
-├── package.json        # 의존성 관리
-└── .github/
-    └── workflows/
-        └── build-android.yml  # GitHub Actions 워크플로우
+├── src/
+│   ├── app/                    # Expo Router (화면)
+│   │   ├── _layout.tsx         # 루트 레이아웃
+│   │   └── (tabs)/             # 탭 네비게이션
+│   │       ├── _layout.tsx     # 탭 레이아웃
+│   │       ├── index.tsx       # 운동 기록 화면
+│   │       └── records.tsx     # 개인 기록 화면
+│   ├── components/             # 재사용 컴포넌트
+│   │   ├── WorkoutInput.tsx    # 운동 입력 폼
+│   │   ├── WorkoutCard.tsx     # 운동 카드
+│   │   ├── SetRow.tsx          # 세트 행
+│   │   ├── PRBadge.tsx         # 신기록 배지
+│   │   └── PersonalRecordCard.tsx  # PR 카드
+│   ├── hooks/                  # 커스텀 훅
+│   │   ├── useWorkouts.ts      # 운동 관리
+│   │   └── usePersonalRecords.ts  # PR 계산
+│   ├── utils/                  # 유틸리티
+│   │   └── workoutUtils.ts     # 계산 함수
+│   └── types/                  # TypeScript 타입
+│       └── workout.ts          # 데이터 타입
+├── app.json                    # Expo 설정
+├── tsconfig.json               # TypeScript 설정
+├── eas.json                    # EAS Build 설정
+└── package.json                # 의존성 관리
 ```
 
 ## 데이터 저장 구조
@@ -129,11 +164,24 @@ workout-tracker/
 
 ## 기술 스택
 
-- **React Native** - 크로스 플랫폼 모바일 프레임워크
-- **Expo** - React Native 개발 플랫폼
+- **TypeScript 6.0.3** - 타입 안전성
+- **React 19.2.3** - UI 라이브러리
+- **React Native 0.86.3** - 크로스 플랫폼 모바일 프레임워크
+- **Expo SDK 57** - React Native 개발 플랫폼
+- **Expo Router** - 파일 기반 라우팅
 - **AsyncStorage** - 로컬 데이터 저장
 - **GitHub Actions** - CI/CD 자동화
 - **EAS Build** - Expo 클라우드 빌드 서비스
+
+## 개발 도구
+
+```bash
+# TypeScript 타입 체크
+npm run typecheck
+
+# Expo 진단
+npx expo-doctor
+```
 
 ## 라이선스
 
