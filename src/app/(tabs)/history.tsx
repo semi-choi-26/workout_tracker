@@ -23,7 +23,7 @@ export default function HistoryScreen() {
       <StatusBar style="auto" />
 
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>📅 운동 히스토리</Text>
+        <Text style={styles.headerTitle}>히스토리</Text>
         <Text style={styles.headerSubtitle}>{completedSessions.length}개 세션</Text>
       </View>
 
@@ -46,33 +46,34 @@ export default function HistoryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#6B8CAE',
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F8F9FA',
   },
   header: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#6B8CAE',
     paddingTop: 20,
     paddingBottom: 20,
     paddingHorizontal: 20,
   },
   headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 24,
+    fontWeight: '600',
     color: '#fff',
     marginBottom: 4,
+    letterSpacing: -0.5,
   },
   headerSubtitle: {
     fontSize: 14,
-    color: '#E6F4FE',
+    color: 'rgba(255, 255, 255, 0.85)',
   },
   content: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F8F9FA',
   },
   contentContainer: {
     padding: 16,
@@ -84,11 +85,12 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    color: '#999',
+    fontWeight: '500',
+    color: '#6C757D',
     marginBottom: 5,
   },
   emptySubText: {
     fontSize: 14,
-    color: '#bbb',
+    color: '#ADB5BD',
   },
 });

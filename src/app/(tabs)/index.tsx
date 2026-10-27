@@ -69,23 +69,22 @@ export default function HomeScreen() {
       <StatusBar style="auto" />
 
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>💪 운동 기록</Text>
-        <Text style={styles.headerSubtitle}>오늘 운동을 시작해보세요!</Text>
+        <Text style={styles.headerTitle}>홈</Text>
+        <Text style={styles.headerSubtitle}>오늘 운동을 시작하세요</Text>
       </View>
 
       <View style={styles.content}>
         <View style={styles.emptyState}>
-          <Text style={styles.emptyIcon}>🏋️</Text>
           <Text style={styles.emptyText}>진행 중인 운동이 없습니다</Text>
           <Text style={styles.emptySubText}>새 운동 세션을 시작하세요</Text>
 
           <TouchableOpacity style={styles.startButton} onPress={handleStartNew}>
-            <Text style={styles.startButtonText}>+ 새 운동 시작</Text>
+            <Text style={styles.startButtonText}>새 운동 시작</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.tips}>
-          <Text style={styles.tipsTitle}>💡 운동 기록 방법</Text>
+          <Text style={styles.tipsTitle}>운동 기록 방법</Text>
           <Text style={styles.tipText}>1. 새 운동 시작 버튼 클릭</Text>
           <Text style={styles.tipText}>2. 운동 종목 추가</Text>
           <Text style={styles.tipText}>3. 세트별로 무게와 횟수 기록</Text>
@@ -99,59 +98,56 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#6B8CAE',
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F8F9FA',
   },
   header: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#6B8CAE',
     paddingTop: 20,
     paddingBottom: 20,
     paddingHorizontal: 20,
   },
   headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 24,
+    fontWeight: '600',
     color: '#fff',
     marginBottom: 4,
+    letterSpacing: -0.5,
   },
   headerSubtitle: {
     fontSize: 14,
-    color: '#E6F4FE',
+    color: 'rgba(255, 255, 255, 0.85)',
   },
   content: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F8F9FA',
     padding: 16,
   },
   emptyState: {
     backgroundColor: '#fff',
     borderRadius: 12,
-    padding: 32,
+    padding: 48,
     alignItems: 'center',
-    marginBottom: 16,
-  },
-  emptyIcon: {
-    fontSize: 64,
     marginBottom: 16,
   },
   emptyText: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: '500',
+    color: '#6C757D',
     marginBottom: 8,
   },
   emptySubText: {
     fontSize: 14,
-    color: '#999',
+    color: '#ADB5BD',
     marginBottom: 24,
   },
   startButton: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#6B8CAE',
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderRadius: 12,
@@ -159,22 +155,26 @@ const styles = StyleSheet.create({
   startButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
   tips: {
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 20,
+    borderWidth: 1,
+    borderColor: '#DEE2E6',
   },
   tipsTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#6C757D',
     marginBottom: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   tipText: {
     fontSize: 14,
-    color: '#666',
+    color: '#6C757D',
     marginBottom: 8,
     lineHeight: 20,
   },

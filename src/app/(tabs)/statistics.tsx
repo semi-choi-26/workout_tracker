@@ -28,7 +28,8 @@ export default function StatisticsScreen() {
       <StatusBar style="auto" />
 
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>📊 통계</Text>
+        <Text style={styles.headerTitle}>통계</Text>
+        <Text style={styles.headerSubtitle}>이번 주 운동 요약</Text>
       </View>
 
       <ScrollView style={styles.content}>
@@ -73,8 +74,8 @@ export default function StatisticsScreen() {
                 backgroundGradientFrom: '#fff',
                 backgroundGradientTo: '#fff',
                 decimalPlaces: 1,
-                color: (opacity = 1) => `rgba(74, 144, 226, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                color: (opacity = 1) => `rgba(107, 140, 174, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(44, 62, 80, ${opacity})`,
                 style: {
                   borderRadius: 16,
                 },
@@ -94,7 +95,7 @@ export default function StatisticsScreen() {
             {recentPRs.map((pr, index) => (
               <View key={index} style={styles.prItem}>
                 <View>
-                  <Text style={styles.prExercise}>🏆 {pr.exerciseName}</Text>
+                  <Text style={styles.prExercise}>{pr.exerciseName}</Text>
                   <Text style={styles.prDate}>{pr.date}</Text>
                 </View>
                 <Text style={styles.prWeight}>{pr.weight}kg</Text>
@@ -117,7 +118,7 @@ export default function StatisticsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#6B8CAE',
   },
   loadingContainer: {
     flex: 1,
@@ -125,19 +126,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#6B8CAE',
     paddingTop: 20,
     paddingBottom: 20,
     paddingHorizontal: 20,
   },
   headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 24,
+    fontWeight: '600',
     color: '#fff',
+    marginBottom: 4,
+    letterSpacing: -0.5,
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.85)',
   },
   content: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F8F9FA',
     padding: 16,
   },
   section: {
@@ -145,12 +152,16 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#DEE2E6',
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '600',
     marginBottom: 16,
-    color: '#333',
+    color: '#6C757D',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   statsGrid: {
     flexDirection: 'row',
@@ -158,20 +169,20 @@ const styles = StyleSheet.create({
   },
   statBox: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 8,
+    backgroundColor: '#F8F9FA',
+    borderRadius: 12,
     padding: 16,
     alignItems: 'center',
   },
   statValue: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#4A90E2',
+    fontWeight: '600',
+    color: '#6B8CAE',
     marginBottom: 4,
   },
   statLabel: {
     fontSize: 12,
-    color: '#666',
+    color: '#6C757D',
     textAlign: 'center',
   },
   chart: {
@@ -184,22 +195,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: '#DEE2E6',
   },
   prExercise: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: '500',
+    color: '#2C3E50',
     marginBottom: 4,
   },
   prDate: {
-    fontSize: 12,
-    color: '#999',
+    fontSize: 13,
+    color: '#ADB5BD',
   },
   prWeight: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#4A90E2',
+    fontWeight: '600',
+    color: '#6B8CAE',
   },
   empty: {
     alignItems: 'center',
@@ -207,11 +218,12 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    color: '#999',
+    fontWeight: '500',
+    color: '#6C757D',
     marginBottom: 5,
   },
   emptySubText: {
     fontSize: 14,
-    color: '#bbb',
+    color: '#ADB5BD',
   },
 });

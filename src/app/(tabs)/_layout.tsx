@@ -9,17 +9,18 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#4A90E2',
-        tabBarInactiveTintColor: '#999',
+        tabBarActiveTintColor: '#6B8CAE',
+        tabBarInactiveTintColor: '#ADB5BD',
         tabBarStyle: {
           height: (Platform.OS === 'ios' ? 60 : 60) + insets.bottom,
           paddingBottom: insets.bottom,
           paddingTop: 8,
           backgroundColor: '#fff',
+          borderTopColor: '#DEE2E6',
         },
         tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
+          fontSize: 13,
+          fontWeight: '500',
         },
       }}
     >
@@ -27,35 +28,26 @@ export default function TabLayout() {
         name="index"
         options={{
           title: '홈',
-          tabBarIcon: ({ color }) => <TabBarIcon name="💪" color={String(color)} />,
         }}
       />
       <Tabs.Screen
         name="history"
         options={{
           title: '히스토리',
-          tabBarIcon: ({ color }) => <TabBarIcon name="📅" color={String(color)} />,
         }}
       />
       <Tabs.Screen
         name="statistics"
         options={{
           title: '통계',
-          tabBarIcon: ({ color }) => <TabBarIcon name="📊" color={String(color)} />,
         }}
       />
       <Tabs.Screen
         name="records"
         options={{
-          href: null, // Hide from tabs - deprecated
+          href: null,
         }}
       />
     </Tabs>
-  );
-}
-
-function TabBarIcon({ name, color }: { name: string; color: string }) {
-  return (
-    <Text style={{ fontSize: 24, color }}>{name}</Text>
   );
 }

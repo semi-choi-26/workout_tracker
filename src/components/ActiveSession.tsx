@@ -89,7 +89,7 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
         <View style={styles.pickerContainer}>
           <Picker selectedValue={category} onValueChange={setCategory}>
             {categories.map(cat => (
-              <Picker.Item key={cat.key} label={`${cat.emoji} ${cat.label}`} value={cat.key} />
+              <Picker.Item key={cat.key} label={cat.label} value={cat.key} />
             ))}
           </Picker>
         </View>
@@ -162,59 +162,64 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F8F9FA',
   },
   header: {
-    padding: 16,
-    backgroundColor: '#4A90E2',
+    padding: 20,
+    backgroundColor: '#6B8CAE',
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: '#fff',
     marginBottom: 4,
+    letterSpacing: -0.5,
   },
   stats: {
     fontSize: 14,
-    color: '#E6F4FE',
+    color: 'rgba(255, 255, 255, 0.85)',
   },
   addExercise: {
     padding: 16,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#DEE2E6',
   },
   label: {
     fontSize: 14,
     fontWeight: '600',
-    marginBottom: 8,
-    color: '#333',
+    marginBottom: 12,
+    color: '#6C757D',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
+    borderColor: '#DEE2E6',
+    borderRadius: 10,
+    padding: 14,
+    fontSize: 15,
     backgroundColor: '#fff',
-    marginBottom: 8,
+    marginBottom: 12,
+    color: '#2C3E50',
   },
   pickerContainer: {
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    marginBottom: 8,
+    borderColor: '#DEE2E6',
+    borderRadius: 10,
+    marginBottom: 12,
     backgroundColor: '#fff',
   },
   addBtn: {
-    backgroundColor: '#4A90E2',
-    padding: 12,
-    borderRadius: 8,
+    backgroundColor: '#8B9EB3',
+    padding: 14,
+    borderRadius: 12,
     alignItems: 'center',
   },
   addBtnText: {
     color: '#fff',
-    fontWeight: '600',
+    fontWeight: '500',
+    fontSize: 15,
   },
   exercises: {
     flex: 1,
@@ -222,30 +227,30 @@ const styles = StyleSheet.create({
   },
   exerciseCard: {
     backgroundColor: '#fff',
-    borderRadius: 8,
+    borderRadius: 12,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: '#DEE2E6',
   },
   exerciseHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 12,
-    backgroundColor: '#f8f9fa',
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    backgroundColor: '#F8F9FA',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   },
   exerciseHeaderActive: {
-    backgroundColor: '#E6F4FE',
+    backgroundColor: 'rgba(107, 140, 174, 0.15)',
   },
   exerciseName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#2C3E50',
   },
   setCount: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 13,
+    color: '#ADB5BD',
   },
   setRow: {
     flexDirection: 'row',
@@ -253,47 +258,47 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    borderTopColor: '#DEE2E6',
   },
   setInfo: {
     fontSize: 14,
-    color: '#555',
+    color: '#6C757D',
   },
   deleteBtn: {
     fontSize: 24,
-    color: '#ff6b6b',
+    color: '#B67B7B',
     fontWeight: 'bold',
   },
   addSet: {
     padding: 16,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#fff',
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
+    borderTopColor: '#DEE2E6',
   },
   row: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 12,
   },
   halfInput: {
     flex: 1,
   },
   addSetBtn: {
-    backgroundColor: '#28a745',
-    padding: 12,
-    borderRadius: 8,
+    backgroundColor: '#7B9F7E',
+    padding: 14,
+    borderRadius: 12,
     alignItems: 'center',
     marginTop: 8,
   },
   completeBtn: {
-    backgroundColor: '#6c757d',
+    backgroundColor: '#8B9EB3',
     padding: 16,
     margin: 16,
-    borderRadius: 8,
+    borderRadius: 12,
     alignItems: 'center',
   },
   completeBtnText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
 });
