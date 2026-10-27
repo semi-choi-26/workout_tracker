@@ -26,15 +26,28 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: '운동 기록',
+          title: '홈',
           tabBarIcon: ({ color }) => <TabBarIcon name="💪" color={String(color)} />,
+        }}
+      />
+      <Tabs.Screen
+        name="history"
+        options={{
+          title: '히스토리',
+          tabBarIcon: ({ color }) => <TabBarIcon name="📅" color={String(color)} />,
+        }}
+      />
+      <Tabs.Screen
+        name="statistics"
+        options={{
+          title: '통계',
+          tabBarIcon: ({ color }) => <TabBarIcon name="📊" color={String(color)} />,
         }}
       />
       <Tabs.Screen
         name="records"
         options={{
-          title: '개인 기록',
-          tabBarIcon: ({ color }) => <TabBarIcon name="🏆" color={String(color)} />,
+          href: null, // Hide from tabs - deprecated
         }}
       />
     </Tabs>
